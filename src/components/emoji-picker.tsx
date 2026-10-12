@@ -11,12 +11,14 @@ type Props = PropsWithChildren<{
 export default function EmojiPicker({ isVisible, children, onClose }: Props) {
   return (
     <View>
+      {/* Modal nativo para mostrar el selector sin cambiar de pantalla. */}
       <Modal
         animationType="slide"
         transparent
         visible={isVisible}
         onRequestClose={onClose}
       >
+        {/* Tocar el fondo o el botón de cierre notifica al componente padre. */}
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Cerrar selector de stickers"
@@ -49,7 +51,7 @@ export default function EmojiPicker({ isVisible, children, onClose }: Props) {
 
 const styles = StyleSheet.create({
   backdrop: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(20, 38, 75, 0.45)',
   },
   modalContent: {

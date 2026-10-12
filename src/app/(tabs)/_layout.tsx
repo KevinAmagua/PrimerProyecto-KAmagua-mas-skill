@@ -3,6 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import epnTheme from '@/constants/epn-theme.json';
 
 export default function TabLayout() {
+  // Expo Router arma las pestañas a partir de las pantallas declaradas abajo.
   return (
     <Tabs
       screenOptions={{

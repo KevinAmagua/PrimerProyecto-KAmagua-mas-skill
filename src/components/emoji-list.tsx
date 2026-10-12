@@ -8,6 +8,7 @@ type Props = {
 };
 
 export default function EmojiList({ onSelect, onCloseModal }: Props) {
+  // Los stickers son recursos locales incluidos con la aplicación.
   const emoji: ImageSourcePropType[] = [
     require("@/assets/images/emoji1.png"),
     require("@/assets/images/emoji2.png"),
@@ -17,6 +18,7 @@ export default function EmojiList({ onSelect, onCloseModal }: Props) {
     require("@/assets/images/emoji6.png"),
   ];
 
+  // FlatList representa los recursos como una lista horizontal desplazable.
   return (
     <FlatList
       horizontal
@@ -33,6 +35,7 @@ export default function EmojiList({ onSelect, onCloseModal }: Props) {
             pressed && styles.stickerOptionPressed,
           ]}
           onPress={() => {
+            // Informa qué sticker se eligió y cierra el selector.
             onSelect(item);
             onCloseModal();
           }}>

@@ -9,6 +9,7 @@ type Props = {
 };
 
 export default function IconButton({ icon, label, onPress }: Props) {
+  // Botón reutilizable para acciones identificadas por icono y texto.
   return (
     <Pressable
       accessibilityRole="button"

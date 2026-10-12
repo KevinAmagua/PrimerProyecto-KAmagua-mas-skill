@@ -20,11 +20,14 @@ const PlaceholderImage = require('@/assets/images/background-image.png');
 const EpnLogo = require('@/assets/images/logo-epn-vertical.png');
 
 export default function Index() {
+  // Estos estados controlan la foto, las opciones, el modal y el sticker actual.
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | undefined>(undefined);
+  // Expo Image Picker gestiona el permiso necesario para acceder a la galería.
   const [permissionResponse, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+  // Esta referencia identifica el marco que se captura al guardar la composición.
   const imageRef = useRef<View>(null);
 
   useEffect(() => {
@@ -34,6 +37,7 @@ export default function Index() {
   }, []);
 
   const pickImageAsync = async () => {
+    // Abre la galería y permite recortar la imagen antes de mostrarla.
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
@@ -49,10 +53,12 @@ export default function Index() {
   };
 
   const onReset = () => {
+    // Vuelve a mostrar los controles iniciales; no borra la foto ni el sticker.
     setShowAppOptions(false);
   };
 
   const onAddSticker = () => {
+    // Muestra el selector de stickers controlado por el estado del modal.
     setIsModalVisible(true);
   };
 
@@ -63,6 +69,7 @@ export default function Index() {
   const onSaveImageAsync = async () => {
     if (Platform.OS !== 'web') {
       try {
+        // En móvil, View Shot captura el marco y Media Library guarda el archivo.
         const localUri = await captureRef(imageRef, {
           height: 440,
           quality: 1,
@@ -77,6 +84,7 @@ export default function Index() {
       }
     } else {
       try {
+        // En web, dom-to-image genera un JPEG que se descarga desde el navegador.
         const dataUrl = await domtoimage.toJpeg(imageRef.current, {
           quality: 0.95,
           width: 320,
@@ -109,11 +117,13 @@ export default function Index() {
         <View style={styles.brandAccent} />
       </View>
       <View style={styles.imageContainer}>
+        {/* El marco contiene la foto y, si existe, el sticker superpuesto. */}
         <View ref={imageRef} collapsable={false} style={styles.previewFrame}>
           <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
           {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
         </View>
       </View>
+      {/* La pantalla alterna entre controles iniciales y acciones de edición. */}
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
           <View style={styles.optionsRow}>
@@ -128,6 +138,7 @@ export default function Index() {
           <Button label="Usar esta foto" onPress={() => setShowAppOptions(true)} />
         </View>
       )}
+      {/* El modal contiene la lista que actualiza el sticker seleccionado. */}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>

@@ -8,10 +8,12 @@ type Props = {
 };
 
 export default function EmojiSticker({ imageSize, stickerSource }: Props) {
+  // Reanimated mantiene el tamaño y la posición como valores animados.
   const scaleImage = useSharedValue(imageSize);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
+  // El doble toque alterna entre el tamaño original y el doble de ese tamaño.
   const doubleTap = Gesture.Tap()
     .numberOfTaps(2)
     .onStart(() => {
@@ -24,11 +26,13 @@ export default function EmojiSticker({ imageSize, stickerSource }: Props) {
 
   const imageStyle = useAnimatedStyle(() => {
     return {
+      // withSpring suaviza el cambio de tamaño.
       width: withSpring(scaleImage.value),
       height: withSpring(scaleImage.value),
     };
   });
 
+  // Pan actualiza la posición según el desplazamiento del dedo.
   const drag = Gesture.Pan().onChange(event => {
     translateX.value += event.changeX;
     translateY.value += event.changeY;

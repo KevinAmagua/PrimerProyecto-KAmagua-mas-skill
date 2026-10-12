@@ -7,6 +7,7 @@ type Props = {
 };
 
 export default function CircleButton({ onPress }: Props) {
+  // Acción destacada que abre el selector de stickers.
   return (
     <View style={styles.circleButtonContainer}>
       <Pressable

@@ -8,6 +8,7 @@ type Props = {
 };
 
 export default function ImageViewer({ imgSource, selectedImage }: Props) {
+  // Prioriza la URI elegida por el usuario; de lo contrario, muestra la imagen inicial.
   const imageSource = selectedImage ? { uri: selectedImage } : imgSource;
 
   return <Image source={imageSource} style={styles.image} />;

@@ -9,6 +9,7 @@ type Props = {
 };
 
 export default function Button({ label, theme, onPress }: Props) {
+  // La variante primaria resalta la acción de elegir foto; la otra es secundaria.
   if (theme === 'primary') {
     return (
       <View
